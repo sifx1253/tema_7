@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <script>
+        let længde = Math.round(Math.random() * 10);
+        let kg = 109;
+        let co2 = længde * kg;
+        let resultat;
+        console.log(co2);
+
+
+        if (co2 < 100) {
+
+            console.log(`Du har fløjet ${længde} timer og udledt ${co2} kg CO2. Du har fjølet til tæt på Thunberg`)
+
+            //            resultat = `Du har fløjet ${længde} timer og udledt ${co2} kg CO2. Du har fjølet til tæt på Thunberg`;
+
+        }
+
+
+
+        //Er arealet mellem 100 og 200, skal der stå: Arealet er ok
+        if (co2 >= 100 && co2 < 200) {
+            console.log(`Du har fløjet ${længde} timer og udledt  ${co2} kg CO2. Ja ja, du behøver ikke at melde dig ud af Å!`)
+
+            //            resultat = `Du har fløjet ${længde} timer og udledt  ${co2} kg CO2. Ja ja, du behøver ikke at melde dig ud af Å!`;
+
+
+        }
+
+        //Er det større end (eller lig med) 200, skal der stå: Arealet er for stort
+        if (co2 >= 200 && co2 > 600) {
+            console.log(`Du har fløjet ${længde} timer og udledt  ${co2} kg CO2. Det er godt for turismen i nordeuropa.`)
+            //resultat = `Du har fløjet ${længde} timer og udledt  ${co2} kg CO2. Det er godt for turismen i nordeuropa.`;
+
+
+        }
+
+        if (co2 > 600) {
+            console.log(`Du har fløjet ${længde} timer og udledt  ${co2} kg CO2. Nå ja vi kan jo altid kolonisere en anden planet ...`)
+            //resultat = `Du har fløjet ${længde} timer og udledt  ${co2} kg CO2. Nå ja vi kan jo altid kolonisere en anden planet ...`;
+
+
+        }
+
+    </script>
+</body>
+
+</html>

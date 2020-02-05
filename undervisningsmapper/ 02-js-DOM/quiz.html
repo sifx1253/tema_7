@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+
+    <style>
+        #point {
+            background: blue;
+            height: 100px;
+            width: 100px;
+            margin: 1rem;
+            display: inline-block;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div id="point"></div>
+    <input type="text" id=sporgsmål>
+    <button id="ja">Ja</button>
+    <button id="nej">nej</button>
+
+    <script>
+        let point;
+        document.querySelector("#nej").addEventListener("click", button_clicked);
+
+        function button_clicked() {
+
+            point++;
+            console.log("point:" + point);
+            //Vis samlet antal point
+            document.querySelector("#score").textContent = "Point " + point
+
+
+
+        }
+
+    </script>
+</body>
+
+</html>
