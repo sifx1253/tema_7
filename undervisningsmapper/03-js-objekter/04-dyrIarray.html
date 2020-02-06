@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+</head>
+
+<body>
+    <article id="udskrift">
+        <h3></h3>
+        <p></p>
+        <p></p>
+        <img src="" alt="">
+
+    </article>
+    <script>
+        //        document.addEventListener("DOMContentLoaded", );
+        const dyr = [{
+            "dyret": "gris",
+            "type": "pattedyr",
+            "levested": "svinefarm",
+            "billede": "http://mabe-kea.dk/E19/pics/pig.png"
+
+        }, {
+            "dyret": "gris",
+            "type": "pattedyr",
+            "levested": "svinefarm",
+            "billede": "http://mabe-kea.dk/E19/pics/pig.png"
+
+        }, {
+            "dyret": "gris",
+            "type": "pattedyr",
+            "levested": "svinefarm",
+            "billede": "http://mabe-kea.dk/E19/pics/pig.png"
+
+        }, {
+            "dyret": "gris",
+            "type": "pattedyr",
+            "levested": "svinefarm",
+            "billede": "http://mabe-kea.dk/E19/pics/pig.png"
+
+        }, {
+            "dyret": "gris",
+            "type": "pattedyr",
+            "levested": "svinefarm",
+            "billede": "http://mabe-kea.dk/E19/pics/pig.png"
+
+        }];
+        console.log(dyr);
+
+        const destination = document.querySelector("#udskrift");
+        const svin = `${dyr.dyret} ${dyr.type}`;
+        destination.querySelector("h3").textContent = dyr.dyret;
+        destination.querySelector("p").textContent = dyr.type;
+        destination.querySelector("p + p").textContent = dyr.levested;
+        destination.querySelector("img").src = dyr.billede;
+    </script>
+</body></html>
