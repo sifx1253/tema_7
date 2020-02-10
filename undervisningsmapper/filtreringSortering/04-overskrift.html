@@ -48,8 +48,8 @@
 
 <body>
     <h1>Alle</h1>
-    <nav> <button class="filter" data-køn="alle">Alle </button>
-        <button class="filter valgt" data-køn="k">Kvinder</button>
+    <nav> <button class="filter valgt" data-køn="alle">Alle </button>
+        <button class="filter" data-køn="k">Kvinder</button>
         <button class="filter" data-køn="m">Mænd </button>
         <button class="filter" data-køn="andet">Andet</button></nav>
 
@@ -139,9 +139,16 @@
             console.log("filter");
             filter = this.dataset.køn;
 
-            visPersoner();
+
 
             document.querySelector("h1").textContent = this.textContent;
+
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.classList.remove("valgt")
+            })
+            this.classList.add("valgt");
+
+            visPersoner();
         }
 
 
