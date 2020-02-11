@@ -1,156 +1,165 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Bistro Babushka</title>
-    <link type="text/css" href="css/styles.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <link rel="stylesheet" href="">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        img {
+            max-width: 100%;
+        }
+
+        #udskriv {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 10px;
+
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-gap: 5px;
+        }
+
+        article {
+            border: 1px solid #000;
+            padding: 10px;
+        }
+
+        nav,
+        h1 {
+            text-align: center;
+        }
+
+
+        @media screen and (min-width:768px) {}
+    </style>
 </head>
 
 <body>
-    <!--popup
-   <div class="popup">
-  <div class="popup-content">
-	  <button>Close</button>
-    <h2 class="single-titel" data-titel>test</h2>
-    <img src="" alt="" class="single-img" data-singleimg>
-    <details open>
-  <summary >Beskrivelse</summary>
- <p data-beskrivelse>Her står noget tekst</p>
-</details>
-  </div>
-  </div>
-   -->
-    <header>
+    <nav>
+        <h1>Alle retter</h1>
+        <button class="filter valgt" data-kategori="alle">Retter</button>
+        <button class="filter" data-kategori="forretter">Forret </button>
+        <button class="filter" data-kategori="hovedretter">hovedretter</button>
+        <button class="filter" data-kategori="desserter">desserter </button>
+        <button class="filter" data-kategori="sideorders">Sideorders</button>
+        <button class="filter" data-kategori="drikkevarer">Drikkevarer</button>
+    </nav>
 
-        <img src="imgs/red_star.svg" alt="">
+    <section id="udskriv">
+        <!--
+        <h2></h2>
+        <p></p>
+        <p></p>
+        <img scr="" alt="">
+-->
 
-    </header>
-    <div class="menu">
 
-        <button class="burger">
-            <div class="bar1"></div>
-            <div class="bar2"></div>
-            <div class="bar3"></div>
-        </button>
+        <template>
+            <article class="retter">
 
-        <nav>
-            <button id="filter-alle">Alle</button>
-            <button id="filter-forretter">Forretter</button>
-            <button id="filter-hovedretter">Hovedretter</button>
-            <button id="filter-desserter">Desserter</button>
-            <button id="filter-drikkevarer">Drikkevarer</button>
-        </nav>
-    </div>
-    <main>
-        <h1 id="overskrift" data-overskrift>Menu</h1>
-        <section id="menu-container" data-container></section>
-    </main>
-    <template data-template>
-        <article data-ret>
+                <h2></h2>
+                <img scr="" alt="">
+                <p></p>
+                <p></p>
 
-            <img src="xx" alt="" class="info" data-billede>
-            <h2 class="info" data-navn></h2>
-            <p class="info" data-kortbeskrivelse></p>
-            <p>Pris: <span class="info" data-pris></span>,-</p>
-        </article>
-    </template>
+            </article>
+        </template>
 
-    <footer>
-        <section>
-            <address>Addresse: <br>Grønnegade 97<br>1234 København K </address>
-            <aside>Åbningstider: <br> Mandag – fredag 10:30 – 22:00<br>Lørdag 12:00 – 23:00</aside>
-        </section>
-    </footer>
+    </section>
+
+
+
 
     <script>
-        let retter;
-        async function hentJson() {
-            //hent json
-            const endpoint = "https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json";
+        const endpoint = "https://spreadsheets.google.com/feeds/list/17Dd7DvkPaFamNUdUKlrFgnH6POvBJXac7qyiS6zNRw0/od6/public/values?alt=json";
+        document.addEventListener("DOMContentLoaded", start);
+        let retter = [];
+        let filter = "alle";
+        const container = document.querySelector("#udskriv");
+        const retterTemplate = document.querySelector("template");
+
+
+
+
+
+
+        //start
+        function start() {
+            hentData();
+            addEventlistnerToButtons()
+
+        }
+
+
+
+        async function hentData() {
+            const jsonData = await fetch(endpoint);
+
             retter = await jsonData.json();
-            //console.log(retter);
-            visRetter(retter, "Menu");
-            //find events der indeholder de valgte kategorier
-            let forretter = retter.filter(ret => ret.kategori == "forretter");
-            let hovedretter = retter.filter(ret => ret.kategori == "hovedretter");
-            let desserter = retter.filter(ret => ret.kategori == "desserter");
-            let drikkevarer = retter.filter(ret => ret.kategori == "drikkevarer");
+            console.log("hentData");
 
-            //sorter retter efter kategori
-            document.querySelector('#filter-alle').addEventListener("click", () => {
-                visRetter(retter, "Menu");
-            });
-
-            document.querySelector('#filter-forretter').addEventListener("click", () => {
-                visRetter(forretter, "Forretter");
-
-            });
-            document.querySelector('#filter-hovedretter').addEventListener("click", () => {
-                visRetter(hovedretter, "Efterretter");
-            });
-            document.querySelector('#filter-desserter').addEventListener("click", event => {
-                visRetter(desserter, "Desserter");
-            });
-            document.querySelector('#filter-drikkevarer').addEventListener("click", e => {
-                visRetter(drikkevarer, "Drikkevarer");
-            });
+            visRetter();
 
         }
 
-        function visRetter(retter, overskrift) {
-            let menuTemplate = document.querySelector("[data-template]");
-            let templateModtager = document.querySelector("[data-container]");
-            templateModtager.innerHTML = "";
-
-            document.querySelector('[data-overskrift]').textContent = overskrift;
-            //for hver ret vis dem i DOM
-            retter.forEach(hverRet => {
-                //klon template og indsæt person
-                let klon = menuTemplate.cloneNode(true).content;
-                klon.querySelector("[data-navn]").textContent = hverRet.navn;
-                klon.querySelector("[data-kortbeskrivelse]").textContent = hverRet.kortbeskrivelse;
-                klon.querySelector("[data-pris]").textContent = hverRet.pris;
-                klon.querySelector("[data-billede]").setAttribute("src", "imgs/small/" + hverRet.billede + "-sm.jpg")
-                klon.querySelector("[data-ret]").setAttribute("data-id", hverRet.id);
-                templateModtager.appendChild(klon);
-                templateModtager.lastElementChild.addEventListener("click", showSingle);
-            });
-        }
 
 
-        function showSingle() {
-            let my_id = this.getAttribute("data-id");
-            let single = retter.find(ret => {
 
-                if (my_id == ret.id) {
-                    //console.log("hurra", single.id);
-                    document.querySelector(".popup").style.visibility = "visible";
-                    document.querySelector("[data-titel]").textContent = ret.navn;
-                    document.querySelector("[data-singleimg]").setAttribute("src", "imgs/medium/" + ret.billede + "-md.jpg")
-                    document.querySelector("[data-beskrivelse]").textContent = ret.langbeskrivelse;
+        function visRetter() {
 
+
+
+            container.innerHTML = "";
+            retter.feed.entry.forEach(ret => {
+                if (filter == "alle" || filter == ret.gsx$kategori.$t) {
+                    let klon = retterTemplate.cloneNode(true).content;
+                    klon.querySelector("img").src = "imgs/small/" + ret.gsx$billede.$t + "-sm.jpg";
+                    klon.querySelector("h2").textContent = ret.gsx$navn.$t;
+                    klon.querySelector("p").textContent = ret.gsx$kort.$t;
+                    klon.querySelector("p + p").textContent = `Pris: ${ret.gsx$pris.$t},-`;
+
+                    container.appendChild(klon);
                 }
-
-                document.querySelector(".popup button").addEventListener("click", e => {
-                    document.querySelector(".popup").style.visibility = "hidden";
-                })
-
             });
+
+
+
+
+
+
+
+
+
+            console.log("visretter");
         }
 
-        function toggleMenu() {
-
-            document.querySelector(".burger").classList.toggle("change");
-            document.querySelector("nav").classList.toggle("show");
+        function addEventlistnerToButtons() {
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.addEventListener("click", filterering);
+            })
         }
 
-        document.querySelector(".burger").addEventListener("click", toggleMenu);
-        document.querySelector("nav").addEventListener("click", toggleMenu);
+
+        function filterering() {
+            console.log("filter");
+            filter = this.dataset.kategori;
 
 
-        document.addEventListener("DOMContentLoaded", hentJson);
+            document.querySelector("h1").textContent = this.textContent;
+
+            document.querySelectorAll(".filter").forEach(elm => {
+                elm.classList.remove("valgt")
+            })
+            this.classList.add("valgt");
+
+            visRetter();
+        }
     </script>
-
 </body></html>
-
