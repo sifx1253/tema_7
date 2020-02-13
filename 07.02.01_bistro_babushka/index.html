@@ -37,11 +37,13 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             grid-gap: 5px;
+
         }
 
         article {
             border: 2px solid #f2efef;
             padding: 10px;
+
         }
 
 
@@ -70,13 +72,10 @@
             font-size: .9rem;
         }
 
-
         nav {
             text-align: center;
 
         }
-
-
 
         #detalje {
             top: 0;
@@ -85,6 +84,11 @@
             height: 50vh;
             z-index: 10;
             background-color: white;
+        }
+
+
+        #detalje img {
+            width: 60%;
         }
 
 
@@ -100,11 +104,17 @@
         button {
 
             color: white;
-            height: 3vw;
+            height: 40px;
             width: 160px;
             background-color: black;
+            transition: 2s;
+        }
 
 
+        button:hover {
+            transition: .4s;
+            transition-timing-function: cubic-bezier(.2, 0, .3, 1);
+            transform: scale(1.07);
         }
 
 
@@ -130,16 +140,6 @@
             font-size: 2rem;
             width: 10%;
         }
-
-
-
-
-        #retter img:hover {
-            transition: .4s;
-            transition-timing-function: cubic-bezier(.2, 0, .3, 1);
-            transform: scale(1.07);
-        }
-
 
 
         @media screen and (min-width:768px) {}
@@ -229,17 +229,10 @@
         const retterTemplate = document.querySelector("template");
 
 
-
-
-
-
-        //start
         function start() {
             hentData();
             addEventlistnerToButtons()
-
         }
-
 
 
         async function hentData() {
@@ -248,16 +241,12 @@
             console.log("hentData");
 
             visRetter();
-
         }
 
 
 
 
         function visRetter() {
-
-
-
             container.innerHTML = "";
             retter.feed.entry.forEach(ret => {
                 if (filter == "alle" || filter == ret.gsx$kategori.$t) {
@@ -276,16 +265,10 @@
                 }
             });
 
-
-
-
-
-
-
-
-
             console.log("visretter");
         }
+
+
 
         function addEventlistnerToButtons() {
             document.querySelectorAll(".filter").forEach(elm => {
@@ -297,10 +280,7 @@
         function filterering() {
             console.log("filter");
             filter = this.dataset.kategori;
-
-
             document.querySelector("h1").textContent = this.textContent;
-
             document.querySelectorAll(".filter").forEach(elm => {
                 elm.classList.remove("valgt")
             })
@@ -314,11 +294,9 @@
             detalje.classList.remove("skjul");
             detalje.querySelector("button").addEventListener("click", () => detalje.classList.add("skjul"));
             detalje.querySelector("h1").textContent = ret.gsx$navn.$t;
-
             detalje.querySelector("p").textContent = ret.gsx$lang.$t;
-            detalje.querySelector("p + p").textContent = "Oprindelse:" +
-                ret.gsx$oprindelse.$t;
-            detalje.querySelector("img").src = "imgs/small/" + ret.gsx$billede.$t + "-sm.jpg";
+            detalje.querySelector("p + p").textContent = "Oprindelse:" + ret.gsx$oprindelse.$t;
+            detalje.querySelector("img").src = "imgs/large/" + ret.gsx$billede.$t + ".jpg";
             console.log(ret.gsx$navn.$t);
         }
     </script>
